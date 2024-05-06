@@ -1,6 +1,8 @@
 import { lazy, Suspense } from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import LazyLoad from '@/components/UI/LazyLoad'
+import Business from '@/pages/Business'
+const Invoices = lazy(() => import('@/pages/Business/Invoices'))
 
 const Onboarding = lazy(() => import('@/pages/Onboarding'))
 const Login = lazy(() => import('@/pages/Auth/Login'))
@@ -13,6 +15,7 @@ const BusinessHome = lazy(() => import('@/pages/Business/Home'))
 const CreateInvoice = lazy(() => import('@/pages/Business/CreateInvoice'))
 const Statistics = lazy(() => import('@/pages/Business/Statistics'))
 const Profile = lazy(() => import('@/pages/Business/Profile'))
+const Invoice = lazy(() => import('@/pages/Business/InvoiceDetails'))
 
 const Routes = () => {
   const publicRoutes = [{ path: '/', element: <Onboarding /> }]
@@ -45,22 +48,23 @@ const Routes = () => {
   const businessRoutes = [
     {
       path: '/',
+      element: <Business />,
       children: [
         {
-          path: '/business/home',
+          path: '/home',
           element: <BusinessHome />,
         },
         {
-          path: '/business/create-invoice',
-          element: <CreateInvoice />,
-        },
-        {
-          path: '/business/statistics',
+          path: '/statistics',
           element: <Statistics />,
         },
         {
-          path: '/business/profile',
+          path: '/profile',
           element: <Profile />,
+        },
+        {
+          path: '/invoices',
+          element: <Invoices />,
         },
       ],
     },
@@ -70,6 +74,14 @@ const Routes = () => {
     ...publicRoutes,
     ...authRoutes,
     ...businessRoutes,
+    {
+      path: '/create-invoice',
+      element: <CreateInvoice />,
+    },
+    {
+      path: '/invoice/:id',
+      element: <Invoice />,
+    },
   ])
 
   return (
