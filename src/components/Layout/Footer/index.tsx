@@ -13,6 +13,8 @@ import HomeActiveIcon from '@/assets/icons/homeActiveIcon.svg'
 import StatisticIcon from '@/assets/icons/statisticIcon.svg'
 import StatisticActiveIcon from '@/assets/icons/statisticActiveIcon.svg'
 import LendingIcon from '@/assets/icons/lendingIcon.svg'
+import ReceiptsIcon from '@/assets/icons/receipts.svg'
+import ReceiptsActiveIcon from '@/assets/icons/receipts_active.svg'
 import LendingActiveIcon from '@/assets/icons/lendingActiveIcon.svg'
 import ProfileIcon from '@/assets/icons/profileIcon.svg'
 import ProfileActiveIcon from '@/assets/icons/profileActiveIcon.svg'
@@ -20,43 +22,45 @@ import ProfileActiveIcon from '@/assets/icons/profileActiveIcon.svg'
 const Footer: React.FC = () => {
   const { pathname } = useLocation()
   const dispatch = useAppDispatch()
-  const { modalName } = useAppSelector((state) => state.modalReducer)
+  // const nav = [
+  //   {
+  //     path: '/home',
+  //     defaultIcon: HomeIcon,
+  //     active: HomeActiveIcon,
+  //     label: 'Home',
+  //   },
+  // ]
+  // const { modalName } = useAppSelector((state) => state.modalReducer)
 
   return (
-    <div className="sticky bottom-0 flex justify-between w-full p-3 bg-white border border-b-0 border-gray-100">
+    <div className="absolute bottom-0 flex justify-between items-baseline w-full p-3 bg-white border border-b-0 border-gray-100 mt-2">
       <Link
-        to={`/business/home`}
+        to={`/home`}
         className={`flex flex-col w-16 items-center justify-center ${
-          pathname.includes('/business/home')
-            ? 'text-primary-0'
-            : 'text-[#8F8F8F]'
+          pathname.includes('/home') ? 'text-primary-0' : 'text-[#8F8F8F]'
         }`}
       >
         <img
-          src={pathname.includes('/business/home') ? HomeActiveIcon : HomeIcon}
+          src={pathname.includes('/home') ? HomeActiveIcon : HomeIcon}
           alt="footer home icon"
         />
         <span>Home</span>
       </Link>
       <Link
-        to={`/business/statistics`}
+        to={`/invoices`}
         className={`flex flex-col w-16 items-center justify-center ${
-          pathname.includes('/business/statistics')
-            ? 'text-primary-0'
-            : 'text-[#8F8F8F]'
+          pathname.includes('/invoices') ? 'text-primary-0' : 'text-[#8F8F8F]'
         }`}
       >
         <img
           src={
-            pathname.includes('/business/statistics')
-              ? StatisticActiveIcon
-              : StatisticIcon
+            pathname.includes('/invoices') ? ReceiptsActiveIcon : ReceiptsIcon
           }
-          alt="footer statistics icon"
+          alt="footer invoices icon"
         />
-        <span>Statistics</span>
+        <span>Invoices</span>
       </Link>
-      <IconButton
+      {/* <IconButton
         disableRipple
         sx={{
           marginTop: '-37px',
@@ -64,52 +68,56 @@ const Footer: React.FC = () => {
           height: '48px',
           background: '#4B56E3',
         }}
-        onClick={() => dispatch(setModalName(NewInvoiceModalName))}
+        //onClick={() => dispatch(setModalName(NewInvoiceModalName))}
       >
         <AddIcon
           sx={{
             color: 'white',
           }}
         />
-      </IconButton>
+      </IconButton> */}
       <Link
-        to={`/business/home`}
+        to={`/statistics`}
         className={`flex flex-col w-16 items-center justify-center ${
-          pathname.includes('/business/lending')
-            ? 'text-primary-0'
-            : 'text-[#8F8F8F]'
+          pathname.includes('/statistics') ? 'text-primary-0' : 'text-[#8F8F8F]'
         }`}
       >
         <img
           src={
-            pathname.includes('/business/lending')
-              ? LendingActiveIcon
-              : LendingIcon
+            pathname.includes('/statistics')
+              ? StatisticActiveIcon
+              : StatisticIcon
           }
+          alt="footer statistics icon"
+        />
+        <span>Statistics</span>
+      </Link>
+
+      {/* <Link
+        to={`/home`}
+        className={`flex flex-col w-16 items-center justify-center ${
+          pathname.includes('/lending') ? 'text-primary-0' : 'text-[#8F8F8F]'
+        }`}
+      >
+        <img
+          src={pathname.includes('/lending') ? LendingActiveIcon : LendingIcon}
           alt="footer lending icon"
         />
         <span>Lending</span>
-      </Link>
+      </Link> */}
       <Link
-        to={`/business/profile`}
+        to={`/profile`}
         className={`flex flex-col w-16 items-center justify-center ${
-          pathname.includes('/business/profile')
-            ? 'text-primary-0'
-            : 'text-[#8F8F8F]'
+          pathname.includes('/profile') ? 'text-primary-0' : 'text-[#8F8F8F]'
         }`}
       >
         <img
-          src={
-            pathname.includes('/business/profile')
-              ? ProfileActiveIcon
-              : ProfileIcon
-          }
+          src={pathname.includes('/profile') ? ProfileActiveIcon : ProfileIcon}
           alt="footer profile icon"
         />
         <span>Profile</span>
       </Link>
-
-      {modalName !== '' && <ModalWrapper />}
+      {/* {modalName !== '' && <ModalWrapper />} */}
     </div>
   )
 }
