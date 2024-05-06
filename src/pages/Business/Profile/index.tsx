@@ -1,5 +1,4 @@
 import React from 'react'
-import Footer from '@/components/Layout/Footer'
 import Typography from '@mui/material/Typography'
 import Avatar from '@mui/material/Avatar'
 import IconButton from '@mui/material/IconButton'
@@ -25,7 +24,7 @@ const VisuallyHiddenInput = styled('input')({
 
 const Profile: React.FC = () => {
   return (
-    <>
+    <div>
       <div className="p-5 pb-16 ">
         <Typography
           sx={{
@@ -191,8 +190,7 @@ const Profile: React.FC = () => {
           </Button>
         </div>
       </div>
-      <Footer />
-    </>
+    </div>
   )
 }
 

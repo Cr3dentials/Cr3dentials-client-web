@@ -5,7 +5,6 @@ import { useTheme } from '@mui/material/styles'
 import Tab from '@mui/material/Tab'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-import Footer from '@/components/Layout/Footer'
 import InvoiceTab from '@/components/Business/Statistics/InvoiceTab'
 import EarningTab from '@/components/Business/Statistics/EarningTab'
 import CustomerTab from '@/components/Business/Statistics/CustomerTab'
@@ -53,78 +52,75 @@ const Statistics: React.FC = () => {
   }
 
   return (
-    <>
-      <div className="p-5 pb-16">
-        <Typography
-          sx={{
-            fontWeight: 700,
-            fontSize: '18px',
-            lineHeight: '20px',
+    <div className="p-5 pb-16">
+      <Typography
+        sx={{
+          fontWeight: 700,
+          fontSize: '18px',
+          lineHeight: '20px',
+        }}
+      >
+        Statistics
+      </Typography>
+      <div className="mt-2">
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="secondary"
+          textColor="inherit"
+          aria-label="Statistics tabs"
+          TabIndicatorProps={{
+            style: {
+              height: '33px',
+              background: 'none',
+              border: '1px solid #19191A',
+              borderRadius: '45px',
+              bottom: '7px',
+            },
           }}
         >
-          Statistics
-        </Typography>
-        <div className="mt-2">
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="secondary"
-            textColor="inherit"
-            aria-label="Statistics tabs"
-            TabIndicatorProps={{
-              style: {
-                height: '33px',
-                background: 'none',
-                border: '1px solid #19191A',
-                borderRadius: '45px',
-                bottom: '7px',
-              },
+          <Tab
+            label="Invoices"
+            sx={{
+              padding: 0,
+              textTransform: 'none',
             }}
-          >
-            <Tab
-              label="Invoices"
-              sx={{
-                padding: 0,
-                textTransform: 'none',
-              }}
-              {...a11yProps(0)}
-            />
-            <Tab
-              label="Earnings"
-              sx={{
-                padding: 0,
-                textTransform: 'none',
-              }}
-              {...a11yProps(1)}
-            />
-            <Tab
-              label="Customer"
-              sx={{
-                padding: 0,
-                textTransform: 'none',
-              }}
-              {...a11yProps(2)}
-            />
-          </Tabs>
-          <SwipeableViews
-            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-            index={value}
-            onChangeIndex={handleChangeIndex}
-          >
-            <TabPanel value={value} index={0} dir={theme.direction}>
-              <InvoiceTab />
-            </TabPanel>
-            <TabPanel value={value} index={1} dir={theme.direction}>
-              <EarningTab />
-            </TabPanel>
-            <TabPanel value={value} index={2} dir={theme.direction}>
-              <CustomerTab />
-            </TabPanel>
-          </SwipeableViews>
-        </div>
+            {...a11yProps(0)}
+          />
+          <Tab
+            label="Earnings"
+            sx={{
+              padding: 0,
+              textTransform: 'none',
+            }}
+            {...a11yProps(1)}
+          />
+          <Tab
+            label="Customer"
+            sx={{
+              padding: 0,
+              textTransform: 'none',
+            }}
+            {...a11yProps(2)}
+          />
+        </Tabs>
+        <SwipeableViews
+          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+          index={value}
+          onChangeIndex={handleChangeIndex}
+        >
+          <TabPanel value={value} index={0} dir={theme.direction}>
+            <InvoiceTab />
+          </TabPanel>
+          <TabPanel value={value} index={1} dir={theme.direction}>
+            <EarningTab />
+          </TabPanel>
+          <TabPanel value={value} index={2} dir={theme.direction}>
+            <CustomerTab />
+          </TabPanel>
+        </SwipeableViews>
       </div>
-      <Footer />
-    </>
+    </div>
   )
 }
 
