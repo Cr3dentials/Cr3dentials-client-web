@@ -1,14 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { setModalName } from '@/store/slices/modalSlice'
-import Dialog from '@mui/material/Dialog'
+import React from 'react'
+import Dialog, { DialogProps } from '@mui/material/Dialog'
 import Slide from '@mui/material/Slide'
 import { TransitionProps } from '@mui/material/transitions'
-
-import NewInvoiceModal, { NewInvoiceModalName } from './NewInvoiceModal'
-import InvoiceSuccessModal, {
-  InvoiceSuccessModalName,
-} from './InvoiceSuccessModal'
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -19,31 +12,21 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />
 })
 
-const ModalWrapper: React.FC = () => {
-  const [open, setOpen] = useState<boolean>(false)
-  const dispatch = useAppDispatch()
-
-  const { modalName } = useAppSelector((state) => state.modalReducer)
-
-  useEffect(() => {
-    if (modalName !== ``) {
-      setOpen(true)
-    }
-  }, [modalName])
-
-  const handleClose = () => {
-    dispatch(setModalName(''))
-    setOpen(false)
-  }
-
+const ModalWrapper = ({
+  open,
+  onClose,
+  children,
+  ...restOfProps
+}: DialogProps) => {
   return (
     <>
       <Dialog
+        {...restOfProps}
         fullWidth
         open={open}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleClose}
+        onClose={onClose}
         aria-describedby="alert-dialog-slide-description"
         sx={{
           '& .MuiDialog-paper': {
@@ -54,8 +37,9 @@ const ModalWrapper: React.FC = () => {
           },
         }}
       >
-        {modalName === NewInvoiceModalName && <NewInvoiceModal />}
-        {modalName === InvoiceSuccessModalName && <InvoiceSuccessModal />}
+        {children}
+        {/* {modalName === NewInvoiceModalName && <NewInvoiceModal />}
+        {modalName === InvoiceSuccessModalName && <InvoiceSuccessModal />} */}
       </Dialog>
     </>
   )
