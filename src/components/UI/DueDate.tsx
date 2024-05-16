@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Typography from '@mui/material/Typography'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import InputAdornment from '@mui/material/InputAdornment'
 import SVGIcon from '@mui/material/SvgIcon'
+import dayjs from 'dayjs'
+import Input from './Input'
 
 const DueDate: React.FC = () => {
-  const handleDateChange = (e: any) => {
-    console.log(e)
-  }
+  // const handleDateChange = (e: any) => {
+  //   console.log(e)
+  // }
+  // const [date, setDate] = useState<dayjs.Dayjs | null>(null)
 
   return (
     <div className="mt-4">
@@ -24,13 +27,17 @@ const DueDate: React.FC = () => {
       >
         Due Date
       </Typography>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Input placeholder="Enter Due Date" label="" type="date" />
+      {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
-          onChange={handleDateChange}
+          name="due_date"
+          //onChange={handleDateChange}
           format="MMMM DD, YYYY"
           sx={{
             width: '100%',
           }}
+          value={date}
+          onChange={setDate}
           slotProps={{
             textField: {
               style: {
@@ -106,7 +113,7 @@ const DueDate: React.FC = () => {
             },
           }}
         />
-      </LocalizationProvider>
+      </LocalizationProvider> */}
     </div>
   )
 }
