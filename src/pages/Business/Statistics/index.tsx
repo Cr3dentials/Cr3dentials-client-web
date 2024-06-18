@@ -43,7 +43,7 @@ const Statistics: React.FC = () => {
   const theme = useTheme()
   const [value, setValue] = React.useState(0)
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_: any, newValue: number) => {
     setValue(newValue)
   }
 
@@ -87,7 +87,7 @@ const Statistics: React.FC = () => {
             }}
             {...a11yProps(0)}
           />
-          <Tab
+          {/* <Tab
             label="Earnings"
             sx={{
               padding: 0,
@@ -102,7 +102,7 @@ const Statistics: React.FC = () => {
               textTransform: 'none',
             }}
             {...a11yProps(2)}
-          />
+          /> */}
         </Tabs>
         <SwipeableViews
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
