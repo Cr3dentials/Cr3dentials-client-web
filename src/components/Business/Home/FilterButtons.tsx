@@ -10,19 +10,19 @@ const filterButtons: Array<FilterButtonProps> = [
     id: 1,
     title: 'Paid',
     icon: PaidIcon,
-    link: '/business/home',
+    link: '/invoices',
   },
   {
     id: 2,
     title: 'Overdue',
     icon: OverdueIcon,
-    link: '/business/home',
+    link: '/invoices',
   },
   {
     id: 3,
     title: 'Active',
     icon: ActiveIcon,
-    link: '/business/home',
+    link: '/invoices',
   },
 ]
 

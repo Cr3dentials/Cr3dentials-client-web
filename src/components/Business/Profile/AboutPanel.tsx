@@ -14,10 +14,7 @@ const AboutPanel: React.FC = () => {
       </Typography>
       <div className="mt-2 border border-[#F5F5F8] rounded-[4px] p-4">
         <div className="flex flex-col items-center">
-          <Link
-            to={`/business/profile`}
-            className="flex justify-between mr-auto"
-          >
+          <Link to={`/profile`} className="flex justify-between mr-auto">
             <div className="flex items-center text-left">
               <img
                 className="inline-block"
@@ -34,10 +31,7 @@ const AboutPanel: React.FC = () => {
               </Typography>
             </div>
           </Link>
-          <Link
-            to={`/business/profile`}
-            className="flex justify-between mt-4 mr-auto"
-          >
+          <Link to={`/profile`} className="flex justify-between mt-4 mr-auto">
             <div className="flex items-center text-left">
               <img
                 className="inline-block"
@@ -54,10 +48,7 @@ const AboutPanel: React.FC = () => {
               </Typography>
             </div>
           </Link>
-          <Link
-            to={`/business/profile`}
-            className="flex justify-between mt-4 mr-auto"
-          >
+          <Link to={`/profile`} className="flex justify-between mt-4 mr-auto">
             <div className="flex items-center text-left">
               <img
                 className="inline-block"

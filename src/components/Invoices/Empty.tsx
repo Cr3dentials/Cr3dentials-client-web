@@ -1,8 +1,9 @@
 import Action from '@/components/UI/Action'
 import Button from '@/components/UI/Button'
 import Moneyjar from '@/assets/images/Moneyjar.png'
+import { Cr3dUser } from '@/features/user/types'
 
-const Empty = () => {
+const Empty = ({ role }: { role: Cr3dUser['role'] }) => {
   return (
     <div className="h-3/4">
       <Action
@@ -13,10 +14,16 @@ const Empty = () => {
             alt="no invoices"
           />
         }
-        subText="Start managing your finances by creating your first invoice."
+        subText={
+          role === 'user'
+            ? 'Nothing here'
+            : 'Start managing your finances by creating your first invoice.'
+        }
         text="No Invoices Found"
       >
-        <Button className="mt-8" label="Create Your First Invoice" />
+        {role === 'vendor' ? (
+          <Button className="mt-8" label="Create Your First Invoice" />
+        ) : null}
       </Action>
     </div>
   )

@@ -3,9 +3,10 @@ import ReactApexChart from 'react-apexcharts'
 import type { ApexOptions } from 'apexcharts'
 import { Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
-import { invoices } from '@/pages/Business/Home'
+// import { invoices } from '@/pages/Business/Home'
 import type { InvoiceItemProps as InvoiceItemType } from '@/components/Invoices/InvoiceItem'
 import InvoiceItem from '@/components/Invoices/InvoiceItem'
+import { status } from '@/components/UI/Status'
 
 export type ItemType = {
   id: number
@@ -14,36 +15,36 @@ export type ItemType = {
   color: string
 }
 
-const items: Array<ItemType> = [
-  {
-    id: 1,
-    amount: 3850.76,
-    status: 'Overdue',
-    color: '#F5222D',
-  },
-  {
-    id: 2,
-    amount: 3850.76,
-    status: 'Paid Early',
-    color: '#20C375',
-  },
-  {
-    id: 3,
-    amount: 3850.76,
-    status: 'Paid',
-    color: '#1FC095',
-  },
-  {
-    id: 4,
-    amount: 3850.76,
-    status: 'Paid Late',
-    color: '#1677FF',
-  },
-]
+// const items: Array<ItemType> = [
+//   {
+//     id: 1,
+//     amount: 3850.76,
+//     status: 'Overdue',
+//     color: '#F5222D',
+//   },
+//   {
+//     id: 2,
+//     amount: 3850.76,
+//     status: 'Paid Early',
+//     color: '#20C375',
+//   },
+//   {
+//     id: 3,
+//     amount: 3850.76,
+//     status: 'Paid',
+//     color: '#1FC095',
+//   },
+//   {
+//     id: 4,
+//     amount: 3850.76,
+//     status: 'Paid Late',
+//     color: '#1677FF',
+//   },
+// ]
 
 const InvoiceTab: React.FC = () => {
-  const labels = ['Paid Late', 'Overdue', 'Paid Early', 'Paid']
-  const series = [45, 15, 20, 20]
+  const labels: status[] = ['pending', 'active']
+  const series = [45, 15]
   const chartOptions = {
     chart: {
       animations: {
@@ -60,7 +61,7 @@ const InvoiceTab: React.FC = () => {
         enabled: true,
       },
     },
-    colors: ['#1677FF', '#F5222D', '#1FC095', '#20C375'],
+    colors: ['#1677FF', '#1FC095'],
     labels,
     plotOptions: {
       pie: {
@@ -108,7 +109,7 @@ const InvoiceTab: React.FC = () => {
             type={chartOptions.chart?.type}
             height={chartOptions.chart?.height}
           />
-          <div className="absolute left-1/2 translate-x-[-50%] translate-y-[-50%] top-1/2">
+          {/* <div className="absolute left-1/2 translate-x-[-50%] translate-y-[-50%] top-1/2">
             <Typography
               fontSize={`27px`}
               lineHeight={`41px`}
@@ -125,10 +126,10 @@ const InvoiceTab: React.FC = () => {
             >
               $16,000
             </Typography>
-          </div>
+          </div> */}
         </div>
         <div className="grid grid-cols-2 text-center">
-          {items.map((item: ItemType) => (
+          {[].map((item: ItemType) => (
             <div key={item.id} className="mb-3">
               <Typography
                 color={item.color}
@@ -150,7 +151,7 @@ const InvoiceTab: React.FC = () => {
           ))}
         </div>
       </div>
-      <div className="mt-4">
+      <div className="mt-4 max-h-96 overflow-auto">
         <Typography
           variant="h6"
           sx={{
@@ -163,12 +164,12 @@ const InvoiceTab: React.FC = () => {
           Completed Invoices
         </Typography>
         <Link
-          to={`/business/home`}
+          to={`/invoices`}
           className="text-primary-0 text-[16px] leading-[20px] float-right mt-[3px]"
         >
           See All
         </Link>
-        {invoices.map((invoice: InvoiceItemType) => (
+        {[].map((invoice: InvoiceItemType) => (
           <InvoiceItem
             key={invoice.id}
             id={invoice.id}

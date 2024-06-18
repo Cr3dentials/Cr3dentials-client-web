@@ -1,27 +1,28 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import IconButton from '@mui/material/IconButton'
-import AddIcon from '@mui/icons-material/Add'
-import { useAppDispatch } from '@/store/hooks'
-import { setModalName } from '@/store/slices/modalSlice'
-import { NewInvoiceModalName } from '@/components/UI/Modal/NewInvoiceModal'
-import ModalWrapper from '@/components/UI/Modal/ModalWrapper'
-import { useAppSelector } from '@/store/hooks'
-
+// import IconButton from '@mui/material/IconButton'
+// import AddIcon from '@mui/icons-material/Add'
+// import { useAppDispatch } from '@/store/hooks'
+// import { setModalName } from '@/store/slices/modalSlice'
+// import { NewInvoiceModalName } from '@/components/UI/Modal/NewInvoiceModal'
+// import ModalWrapper from '@/components/UI/Modal/ModalWrapper'
+// import { useAppSelector } from '@/store/hooks'
 import HomeIcon from '@/assets/icons/homeIcon.svg'
 import HomeActiveIcon from '@/assets/icons/homeActiveIcon.svg'
 import StatisticIcon from '@/assets/icons/statisticIcon.svg'
 import StatisticActiveIcon from '@/assets/icons/statisticActiveIcon.svg'
-import LendingIcon from '@/assets/icons/lendingIcon.svg'
+// import LendingIcon from '@/assets/icons/lendingIcon.svg'
 import ReceiptsIcon from '@/assets/icons/receipts.svg'
 import ReceiptsActiveIcon from '@/assets/icons/receipts_active.svg'
-import LendingActiveIcon from '@/assets/icons/lendingActiveIcon.svg'
+// import LendingActiveIcon from '@/assets/icons/lendingActiveIcon.svg'
 import ProfileIcon from '@/assets/icons/profileIcon.svg'
 import ProfileActiveIcon from '@/assets/icons/profileActiveIcon.svg'
+//import { useCr3dUser } from '@/features/user/hooks'
 
 const Footer: React.FC = () => {
   const { pathname } = useLocation()
-  const dispatch = useAppDispatch()
+  //const cr3dUser = useCr3dUser()
+  // const dispatch = useAppDispatch()
   // const nav = [
   //   {
   //     path: '/home',
@@ -76,7 +77,8 @@ const Footer: React.FC = () => {
           }}
         />
       </IconButton> */}
-      <Link
+
+      {/* <Link
         to={`/statistics`}
         className={`flex flex-col w-16 items-center justify-center ${
           pathname.includes('/statistics') ? 'text-primary-0' : 'text-[#8F8F8F]'
@@ -91,7 +93,7 @@ const Footer: React.FC = () => {
           alt="footer statistics icon"
         />
         <span>Statistics</span>
-      </Link>
+      </Link> */}
 
       {/* <Link
         to={`/home`}
