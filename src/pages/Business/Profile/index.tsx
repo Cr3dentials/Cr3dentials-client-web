@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Typography from '@mui/material/Typography'
 import Avatar from '@mui/material/Avatar'
 import IconButton from '@mui/material/IconButton'
@@ -9,6 +9,9 @@ import SettingPanel from '@/components/Business/Profile/SettingPanel'
 
 import AvatarImg from '@/assets/images/Avatar.png'
 import AboutPanel from '@/components/Business/Profile/AboutPanel'
+import { useLogout, usePrivy } from '@privy-io/react-auth'
+import { useCr3dUser } from '@/features/user/hooks'
+//import { useNavigate } from 'react-router-dom'
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -23,6 +26,15 @@ const VisuallyHiddenInput = styled('input')({
 })
 
 const Profile: React.FC = () => {
+  const [logingOut, setLogingOut] = useState(false)
+  const { user } = usePrivy()
+  const cr3dUser = useCr3dUser()
+  const isVendor = cr3dUser.role === 'vendor'
+  const { logout } = useLogout({
+    onSuccess() {
+      window.location.pathname = '/'
+    },
+  })
   return (
     <div>
       <div className="p-5 pb-16 ">
@@ -37,7 +49,7 @@ const Profile: React.FC = () => {
         </Typography>
         <div className="relative flex justify-center mt-8">
           <Avatar
-            src={AvatarImg}
+            //src={AvatarImg}
             alt="Avatar image"
             sx={{
               width: '110px',
@@ -88,55 +100,63 @@ const Profile: React.FC = () => {
             lineHeight={`20px`}
             textAlign={`center`}
           >
-            Ahmer Ilyas
+            {user?.id}
           </Typography>
         </div>
-        <div className="mt-5">
-          <Button
-            variant="contained"
-            fullWidth
-            disableElevation
-            disableFocusRipple
-            disableRipple
-            disableTouchRipple
-            startIcon={
-              <SvgIcon
-                sx={{
-                  width: '48px',
-                  height: '48px',
-                  marginRight: '20px',
-                }}
-              >
-                <svg
-                  viewBox="0 0 48 48"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+        {isVendor && (
+          <div className="mt-5">
+            <Button
+              variant="contained"
+              disabled={logingOut}
+              fullWidth
+              disableElevation
+              disableFocusRipple
+              disableRipple
+              disableTouchRipple
+              onClick={() => {
+                setLogingOut(true)
+                logout()
+              }}
+              startIcon={
+                <SvgIcon
+                  sx={{
+                    width: '48px',
+                    height: '48px',
+                    marginRight: '20px',
+                  }}
                 >
-                  <rect width="48" height="48" rx="24" fill="#4B56E3" />
-                  <path
-                    d="M10.6667 26.6667C10.6667 26.6667 10.8285 27.799 15.5148 32.4853C20.2011 37.1716 27.7991 37.1716 32.4854 32.4853C34.1457 30.8249 35.2178 28.799 35.7016 26.6667M10.6667 26.6667V34.6667M10.6667 26.6667H18.6667M37.3334 21.3333C37.3334 21.3333 37.1717 20.201 32.4854 15.5147C27.7991 10.8284 20.2011 10.8284 15.5148 15.5147C13.8544 17.1751 12.7823 19.201 12.2985 21.3333M37.3334 21.3333V13.3333M37.3334 21.3333H29.3334"
-                    stroke="white"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </SvgIcon>
-            }
-            sx={{
-              background: '#EDEEFC',
-              color: 'black',
-              padding: '16px',
-              fontWeight: 500,
-              fontSize: '16px',
-              textAlign: 'center',
-              lineHeight: '20px',
-              borderRadius: '8px',
-            }}
-          >
-            Switch to Customer account
-          </Button>
-        </div>
+                  <svg
+                    viewBox="0 0 48 48"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect width="48" height="48" rx="24" fill="#4B56E3" />
+                    <path
+                      d="M10.6667 26.6667C10.6667 26.6667 10.8285 27.799 15.5148 32.4853C20.2011 37.1716 27.7991 37.1716 32.4854 32.4853C34.1457 30.8249 35.2178 28.799 35.7016 26.6667M10.6667 26.6667V34.6667M10.6667 26.6667H18.6667M37.3334 21.3333C37.3334 21.3333 37.1717 20.201 32.4854 15.5147C27.7991 10.8284 20.2011 10.8284 15.5148 15.5147C13.8544 17.1751 12.7823 19.201 12.2985 21.3333M37.3334 21.3333V13.3333M37.3334 21.3333H29.3334"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </SvgIcon>
+              }
+              sx={{
+                background: '#EDEEFC !important',
+                color: 'black',
+                padding: '16px',
+                fontWeight: 500,
+                fontSize: '16px',
+                textAlign: 'center',
+                lineHeight: '20px',
+                borderRadius: '8px',
+              }}
+            >
+              Switch to Customer account
+            </Button>
+          </div>
+        )}
+
         <div className="mt-5">
           <SettingPanel />
         </div>
@@ -146,7 +166,12 @@ const Profile: React.FC = () => {
         <div className="mt-5">
           <Button
             variant="contained"
+            onClick={() => {
+              setLogingOut(true)
+              logout()
+            }}
             fullWidth
+            disabled={logingOut}
             disableElevation
             disableFocusRipple
             disableRipple
@@ -176,7 +201,7 @@ const Profile: React.FC = () => {
               </SvgIcon>
             }
             sx={{
-              background: '#F0F1F5',
+              background: '#F0F1F5 !important',
               color: 'black',
               padding: '16px',
               fontWeight: 500,
@@ -186,9 +211,14 @@ const Profile: React.FC = () => {
               borderRadius: '8px',
             }}
           >
-            Logout
+            {logingOut ? 'Please wait...' : 'Logout'}
           </Button>
         </div>
+        <div
+          style={{
+            height: '16px',
+          }}
+        ></div>
       </div>
     </div>
   )
