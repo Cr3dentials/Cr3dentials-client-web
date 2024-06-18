@@ -9,6 +9,7 @@ import * as yup from 'yup'
 import _ from 'lodash'
 import CustomDivider from '@/components/Auth/CustomDivider'
 import SSOButtons from '@/components/Auth/SSOButtons'
+import { Link } from 'react-router-dom'
 
 const schema = yup.object().shape({
   email: yup
@@ -123,11 +124,13 @@ const Login: React.FC = () => {
             )}
           />
           <div className="mt-14">
-            <Button
-              label="Sign up"
-              disabled={_.isEmpty(dirtyFields) || !isValid}
-              type="submit"
-            />
+            <Link to={'/home'}>
+              <Button
+                label="Sign up"
+                disabled={_.isEmpty(dirtyFields) || !isValid}
+                type="submit"
+              />
+            </Link>
           </div>
         </form>
 

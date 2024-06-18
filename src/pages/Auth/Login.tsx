@@ -122,11 +122,13 @@ const Login: React.FC = () => {
             </Typography>
           </Link>
           <div className="mt-14">
-            <Button
-              label="Login"
-              disabled={_.isEmpty(dirtyFields) || !isValid}
-              type="submit"
-            />
+            <Link to={'/home'}>
+              <Button
+                label="Login"
+                disabled={_.isEmpty(dirtyFields) || !isValid}
+                type="submit"
+              />
+            </Link>
           </div>
         </form>
 

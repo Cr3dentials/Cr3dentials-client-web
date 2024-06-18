@@ -11,13 +11,18 @@ const sharedSchema = v.object({
     v.custom<string>(ethers.isAddress, 'Invalid Wallet Address'),
   ]),
   role: v.enum_(ROLES),
-  created_at: v.number([v.minValue(1)]),
+  created_at: v.number([v.minValue(1, 'Due date required')]),
 })
 
-export const createCr3dUser = v.merge([
+export const createCr3dUserSchema = v.merge([
   sharedSchema,
   v.object({
-    phone_nummber: v.string([v.minLength(1, 'phone number is required')]),
+    phone_number: v.string([v.minLength(1, 'Phone number is required')]),
   }),
 ])
-export const createCr3dUserVendor = sharedSchema
+export const createCr3dUserVendorSchema = v.merge([
+  sharedSchema,
+  v.object({
+    vendorTillNumber: v.number([v.minValue(1000, 'Invalid Till Number')]),
+  }),
+])

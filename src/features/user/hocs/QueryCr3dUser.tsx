@@ -1,7 +1,6 @@
 import { usePrivy } from '@privy-io/react-auth'
 import { useQuery } from '@tanstack/react-query'
 import React from 'react'
-import Loader from '@/components/UI/Loader'
 import { fetchCr3dUser } from '../api'
 import LazyLoad from '@/components/UI/LazyLoad'
 
@@ -19,7 +18,12 @@ const QueryCr3dUser = ({ children }: { children: React.ReactNode }) => {
         username: user?.wallet?.address,
       }),
     enabled: authenticated && !publicPaths.includes(pathname),
+    retry: false,
   })
+
+  if (authenticated && cr3dUserQuery.error?.message === '404') {
+    //redirect to either info / customer info
+  }
 
   if (authenticated) {
     if (cr3dUserQuery.isLoading) {
@@ -31,7 +35,7 @@ const QueryCr3dUser = ({ children }: { children: React.ReactNode }) => {
     }
     return (
       <div className="p-5 pb-16 min-h-screen flex justify-center items-center">
-        <span>Something bad happen. Please reload the page in 2 mins</span>
+        <span>Something bad happen. {cr3dUserQuery.error.message}</span>
       </div>
     )
   }

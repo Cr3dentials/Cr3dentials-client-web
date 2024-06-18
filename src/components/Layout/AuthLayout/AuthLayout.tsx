@@ -10,7 +10,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({
   children,
 }: AuthLayoutProps) => {
   return (
-    <div>
+    <div className="p-5 pb-16">
       <Link to={'/'}>
         <ArrowBackIosNewIcon />
       </Link>
