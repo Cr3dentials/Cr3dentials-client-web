@@ -1,108 +1,139 @@
-import React, { SyntheticEvent, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Switch, { SwitchProps } from '@mui/material/Switch'
-import { styled } from '@mui/material/styles'
-import InstallmentSelect from '@/components/UI/Selects/InstallmentSelect'
 import CurrencySelect from '@/components/UI/Selects/CurrencySelect'
 import PaymentSelect from '@/components/UI/Selects/PaymentSelect'
 import DueDate from '@/components/UI/DueDate'
-import InvoiceItem from '@/components/Business/CreateInvoice/InvoiceItem'
-import type { InvoiceItemProps as InvoiceItemType } from '@/components/Business/CreateInvoice/InvoiceItem'
 import OutlinedButton from '@/components/UI/OutlinedButton'
 import Button from '@/components/UI/Button'
-import { useAppDispatch } from '@/store/hooks'
 import ModalWrapper from '@/components/UI/Modal/ModalWrapper'
-import { useAppSelector } from '@/store/hooks'
-import { setModalName } from '@/store/slices/modalSlice'
-import { InvoiceSuccessModalName } from '@/components/UI/Modal/InvoiceSuccessModal'
+import SuccessImg from '@/assets/images/successImg.png'
+import Action from '@/components/UI/Action'
+import { useCreateInvoice } from '@/features/createInvoice/hooks'
+import { usePrivy } from '@privy-io/react-auth'
+import Input from '@/components/UI/Input'
+import { generateRandomNumber } from '@/features/createInvoice/utils'
+import { useCr3dUser } from '@/features/user/hooks'
 
-const InstallmentSwitch = styled((props: SwitchProps) => (
-  <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
-))(({ theme }) => ({
-  width: 51,
-  height: 31,
-  padding: 0,
-  '& .MuiSwitch-switchBase': {
-    padding: 0,
-    margin: 2,
-    transitionDuration: '300ms',
-    '&.Mui-checked': {
-      transform: 'translateX(20px)',
-      color: '#fff',
-      '& + .MuiSwitch-track': {
-        backgroundColor: '#4B56E3',
-        opacity: 1,
-        border: 0,
-      },
-      '&.Mui-disabled + .MuiSwitch-track': {
-        opacity: 0.5,
-      },
-    },
-    '&.Mui-focusVisible .MuiSwitch-thumb': {
-      color: '#33cf4d',
-      border: '6px solid #fff',
-    },
-    '&.Mui-disabled .MuiSwitch-thumb': {
-      color:
-        theme.palette.mode === 'light'
-          ? theme.palette.grey[100]
-          : theme.palette.grey[600],
-    },
-    '&.Mui-disabled + .MuiSwitch-track': {
-      opacity: theme.palette.mode === 'light' ? 0.7 : 0.3,
-    },
-  },
-  '& .MuiSwitch-thumb': {
-    boxSizing: 'border-box',
-    width: 27,
-    height: 27,
-  },
-  '& .MuiSwitch-track': {
-    borderRadius: 31 / 2,
-    backgroundColor: '#333743',
-    opacity: 1,
-    transition: theme.transitions.create(['background-color'], {
-      duration: 500,
-    }),
-  },
-}))
+// const InstallmentSwitch = styled((props: SwitchProps) => (
+//   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
+// ))(({ theme }) => ({
+//   width: 51,
+//   height: 31,
+//   padding: 0,
+//   '& .MuiSwitch-switchBase': {
+//     padding: 0,
+//     margin: 2,
+//     transitionDuration: '300ms',
+//     '&.Mui-checked': {
+//       transform: 'translateX(20px)',
+//       color: '#fff',
+//       '& + .MuiSwitch-track': {
+//         backgroundColor: '#4B56E3',
+//         opacity: 1,
+//         border: 0,
+//       },
+//       '&.Mui-disabled + .MuiSwitch-track': {
+//         opacity: 0.5,
+//       },
+//     },
+//     '&.Mui-focusVisible .MuiSwitch-thumb': {
+//       color: '#33cf4d',
+//       border: '6px solid #fff',
+//     },
+//     '&.Mui-disabled .MuiSwitch-thumb': {
+//       color:
+//         theme.palette.mode === 'light'
+//           ? theme.palette.grey[100]
+//           : theme.palette.grey[600],
+//     },
+//     '&.Mui-disabled + .MuiSwitch-track': {
+//       opacity: theme.palette.mode === 'light' ? 0.7 : 0.3,
+//     },
+//   },
+//   '& .MuiSwitch-thumb': {
+//     boxSizing: 'border-box',
+//     width: 27,
+//     height: 27,
+//   },
+//   '& .MuiSwitch-track': {
+//     borderRadius: 31 / 2,
+//     backgroundColor: '#333743',
+//     opacity: 1,
+//     transition: theme.transitions.create(['background-color'], {
+//       duration: 500,
+//     }),
+//   },
+// }))
 
 const CreateInvoice: React.FC = () => {
-  const [installment, setInstallment] = useState(false)
-  const dispatch = useAppDispatch()
-  const { modalName } = useAppSelector((state) => state.modalReducer)
+  // const [installmentCheckedFlag, setInstallmentCheckedFlag] = useState(false)
+  // const [createInvoiceSuccess, setCreateInvoiceSuccess] = useState(false)
+  const createInvoiceMutation = useCreateInvoice()
+  const navigate = useNavigate()
+  const { user } = usePrivy()
+  function closeDialog() {
+    //setCreateInvoiceSuccess(false)
+    createInvoiceMutation.reset()
+  }
+  const cr3dUser = useCr3dUser()
 
-  useEffect(() => {
-    dispatch(setModalName(''))
-  }, [])
+  const createInvoiceOnSubmit: React.FormEventHandler<HTMLFormElement> = (
+    e,
+  ) => {
+    e.preventDefault()
+    const formEl = e.target as HTMLFormElement
+    const payload = [...new FormData(formEl).entries()].reduce((a, b) => {
+      return {
+        [b[0]]: b[1],
+        ...a,
+      }
+    }, {}) as {
+      dueDate: string
+      processor: string
+      currency: string
+      phonePayer: string
+      namePayer: string
+      amount: string
+    }
 
-  const [invoices] = useState<Array<InvoiceItemType>>([
-    {
-      id: 1,
-      title: 'Invoice Item #1',
-      amount: 253.0,
-    },
-    {
-      id: 2,
-      title: 'Invoice Item #2',
-      amount: 380.0,
-    },
-  ])
-
-  const handleInstallmentChange = (e: SyntheticEvent) => {
-    setInstallment((e.target as HTMLInputElement).checked)
+    // console.log(payload)
+    createInvoiceMutation.mutate({
+      ...payload,
+      amount: parseFloat(payload.amount),
+      dueDate: Math.floor(new Date(payload.dueDate).getTime() / 1000),
+      payer: user?.wallet?.address!,
+      vendorId: user?.wallet?.address!,
+      invoiceId: generateRandomNumber(),
+      vendorTillNumber: parseInt(cr3dUser.vendor_till_number! + ''),
+    })
+    // createInvoiceMutation.mutate({
+    //   invoice_id: generateRandomString(),
+    //   due_date: Math.floor(new Date(payload['due-date']).getTime() / 1000),
+    //   amount: parseFloat(payload.amount),
+    //   currency: payload['Currency-Select'],
+    //   processor: payload['Payment-Select'],
+    //   payer: payload['phone-payer'],
+    //   vendor_id: user?.id!,
+    // })
   }
 
-  const handleCreate = () => {
-    dispatch(setModalName(InvoiceSuccessModalName))
-  }
-
+  // const [invoices] = useState<Array<InvoiceItemType>>([
+  //   {
+  //     id: 1,
+  //     title: 'Invoice Item #1',
+  //     amount: 253.0,
+  //   },
+  //   {
+  //     id: 2,
+  //     title: 'Invoice Item #2',
+  //     amount: 380.0,
+  //   },
+  // ])
   return (
     <div className="p-5">
-      <Link to="/business/home" className="block float-left">
+      <Link to="/home" className="block float-left">
         <ArrowBackIosNewIcon />
       </Link>
       <Typography
@@ -117,61 +148,147 @@ const CreateInvoice: React.FC = () => {
       >
         Create Invoice
       </Typography>
-
-      <FormControlLabel
-        control={
-          <InstallmentSwitch sx={{ m: 1 }} onChange={handleInstallmentChange} />
-        }
-        label={
-          <Typography
-            sx={{
-              fontSize: '16px',
-              fontWeight: 600,
-              lineHeight: '20px',
-              color: '#333743',
-            }}
-          >
-            Installment Plan
-          </Typography>
-        }
-        labelPlacement="start"
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          margin: 0,
-          marginTop: '20px',
-          width: '100%',
-        }}
-      />
-      {installment && <InstallmentSelect />}
-      <div className="mt-4">
-        <CurrencySelect />
-      </div>
-      <div className="mt-4">
-        <PaymentSelect />
-      </div>
-      <div className="mt-4">
-        <DueDate />
-      </div>
-      <div className="mt-4">
-        {invoices.map((invoice: InvoiceItemType) => (
-          <InvoiceItem
-            id={invoice.id}
-            key={invoice.id}
-            title={invoice.title}
-            amount={invoice.amount}
+      <form onSubmit={createInvoiceOnSubmit}>
+        <div className="mt-4">
+          <Input
+            required
+            name="namePayer"
+            label="Name"
+            placeholder="Name of Payer"
+            type="text"
           />
-        ))}
-      </div>
-      <div className="mt-4">
-        <OutlinedButton label="+ Add item or service" />
-        <Button
-          label="Create Invoice"
-          className="mt-8"
-          onClick={handleCreate}
+        </div>
+        <div className="mt-4">
+          <Input
+            required
+            name="phonePayer"
+            label="Phone Number of Payer"
+            placeholder="Phone Number"
+            type="text"
+          />
+        </div>
+        {/* <div className="mt-4">
+          <Input
+            required
+            name="email_payer"
+            label="Email of Payer"
+            placeholder="Email Address"
+            type="email"
+          />
+        </div> */}
+
+        <div className="mt-4">
+          <Input
+            required
+            name="amount"
+            label="Amount"
+            placeholder="5000"
+            type="text"
+          />
+        </div>
+        {/* <FormControlLabel
+          control={
+            <InstallmentSwitch
+              sx={{ m: 1 }}
+              onChange={(_, checked) => {
+                setInstallmentCheckedFlag(checked)
+              }}
+            />
+          }
+          label={
+            <Typography
+              sx={{
+                fontSize: '16px',
+                fontWeight: 600,
+                lineHeight: '20px',
+                color: '#333743',
+              }}
+            >
+              Installment Plan
+            </Typography>
+          }
+          labelPlacement="start"
+          name="installment-switch"
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            margin: 0,
+            marginTop: '20px',
+            width: '100%',
+          }}
         />
-      </div>
-      {modalName !== '' && <ModalWrapper />}
+        {installmentCheckedFlag && <InstallmentSelect />} */}
+        <div className="mt-4">
+          <CurrencySelect />
+        </div>
+        <div className="mt-4">
+          <PaymentSelect />
+        </div>
+        <div className="mt-4">
+          <DueDate />
+        </div>
+        {/* <div className="mt-4 max-h-96 overflow-auto">
+          {invoices.map((invoice: InvoiceItemType) => (
+            <InvoiceItem
+              id={invoice.id}
+              key={invoice.id}
+              title={invoice.title}
+              amount={invoice.amount}
+            />
+          ))}
+        </div> */}
+        <div className="mt-4">
+          {/* <OutlinedButton type="button" label="+ Add item or service" /> */}
+          <Button
+            type="submit"
+            label={
+              createInvoiceMutation.isPending ? 'Creating...' : 'Create Invoice'
+            }
+            disabled={createInvoiceMutation.isPending}
+            className="mt-8"
+            // onClick={() => {
+            //   setCreateInvoiceSuccess(true)
+            // }}
+          />
+        </div>
+        {createInvoiceMutation.isError && (
+          <span className="mt-4 text-danger-100 text-center block">
+            {createInvoiceMutation.error.message ||
+              "Sorry,couldn't create invoice.Try again"}
+          </span>
+        )}
+      </form>
+
+      <ModalWrapper
+        onClose={closeDialog}
+        open={createInvoiceMutation.isSuccess}
+      >
+        <Action
+          Icon={
+            <img
+              className="w-[105px] h-[105px]"
+              src={SuccessImg}
+              alt="invoice success creation image"
+            />
+          }
+          text="Invoice has been Created Successfully!"
+          subText="Invoice Created Successfully for a Seamless Transaction Record."
+        >
+          <Button
+            onClick={() => {
+              navigate('/invoices')
+              //TODO: nav to the created invoice
+            }}
+            label={`That's Great`}
+            className="mt-6"
+          />
+          <OutlinedButton
+            onClick={closeDialog}
+            label="Create more Invoice"
+            className="mt-4"
+          />
+        </Action>
+      </ModalWrapper>
     </div>
   )
 }
