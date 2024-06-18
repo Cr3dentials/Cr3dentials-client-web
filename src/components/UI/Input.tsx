@@ -17,6 +17,7 @@ export type InputProps = {
   field?: any
   error?: boolean
   helperText?: string
+  name?: string
 }
 
 const Input: React.FC<InputProps> = ({
@@ -26,6 +27,7 @@ const Input: React.FC<InputProps> = ({
   required,
   field,
   error,
+  name,
   helperText,
 }: InputProps) => {
   const [showPassword, setShowPassword] = React.useState(false)
@@ -51,6 +53,7 @@ const Input: React.FC<InputProps> = ({
           {...field}
           id={label}
           type={type}
+          name={name}
           variant="outlined"
           required={required}
           placeholder={placeholder}
@@ -71,6 +74,7 @@ const Input: React.FC<InputProps> = ({
         <TextField
           {...field}
           id={label}
+          name={name}
           type={showPassword ? 'text' : 'password'}
           variant="outlined"
           required={required}

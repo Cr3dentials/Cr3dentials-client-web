@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Typography from '@mui/material/Typography'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
+import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
 const CurrencySelect: React.FC = () => {
-  const [payment, setPayment] = useState('mpesa')
+  // const [payment, setPayment] = useState('mpesa')
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setPayment(event.target.value as string)
-  }
+  // const handleChange = (event: SelectChangeEvent) => {
+  //   setPayment(event.target.value as string)
+  // }
 
   return (
     <div className="mt-4">
@@ -26,10 +26,12 @@ const CurrencySelect: React.FC = () => {
       </Typography>
       <Select
         fullWidth
-        labelId="Currency-Select-Label"
-        id="Currency-Select"
-        value={payment}
-        onChange={handleChange}
+        labelId="Payment-Select-Label"
+        id="Payment-Select"
+        name="processor"
+        defaultValue={'MPESA'}
+        // value={payment}
+        // onChange={handleChange}
         IconComponent={(props) => <KeyboardArrowDownIcon {...props} />}
         sx={{
           '& .MuiOutlinedInput-notchedOutline': {
@@ -41,8 +43,8 @@ const CurrencySelect: React.FC = () => {
           },
         }}
       >
-        <MenuItem value={`mpesa`}>Mpesa</MenuItem>
-        <MenuItem value={`greendot`}>Green Dot</MenuItem>
+        <MenuItem value={'MPESA'}>Mpesa</MenuItem>
+        {/* <MenuItem value={`greendot`}>Green Dot</MenuItem> */}
       </Select>
     </div>
   )

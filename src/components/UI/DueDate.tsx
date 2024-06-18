@@ -1,11 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Typography from '@mui/material/Typography'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import InputAdornment from '@mui/material/InputAdornment'
-import SVGIcon from '@mui/material/SvgIcon'
-import dayjs from 'dayjs'
 import Input from './Input'
 
 const DueDate: React.FC = () => {
@@ -27,7 +21,14 @@ const DueDate: React.FC = () => {
       >
         Due Date
       </Typography>
-      <Input placeholder="Enter Due Date" label="" type="date" />
+      {/**TODO: prevent users from entering past dates */}
+      <Input
+        name="dueDate"
+        placeholder="Enter Due Date"
+        required
+        label=""
+        type="date"
+      />
       {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
           name="due_date"

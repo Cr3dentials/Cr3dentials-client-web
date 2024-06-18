@@ -8,7 +8,7 @@ export type ButtonProps = {
   label: string
   className?: string
   type?: 'button' | 'submit' | 'reset'
-  onClick?: () => void
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
 const Button: React.FC<ButtonProps> = ({

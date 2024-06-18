@@ -1,6 +1,6 @@
 import React from 'react'
 import MuiButton from '@mui/material/Button'
-
+import { twMerge } from 'tailwind-merge'
 export type ButtonProps = {
   disabled?: boolean | undefined
   loading?: boolean | undefined
@@ -8,7 +8,8 @@ export type ButtonProps = {
   label: string
   className?: string
   type?: 'button' | 'submit' | 'reset'
-  onClick?: () => void
+  name?: string
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -22,7 +23,10 @@ const Button: React.FC<ButtonProps> = ({
     <>
       <MuiButton
         disabled={disabled}
-        className={`bg-primary-0 rounded-[100px] text-white text-[16px] leading-[12px] h-[56px] w-full ${className}`}
+        className={twMerge(
+          'bg-primary-0 rounded-[100px] text-white text-[16px] leading-[12px] h-[56px] w-full',
+          className,
+        )}
         disableElevation
         onClick={onClick}
         variant="contained"

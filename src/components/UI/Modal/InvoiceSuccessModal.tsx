@@ -1,27 +1,27 @@
 import React from 'react'
 import Typography from '@mui/material/Typography'
 import { useNavigate } from 'react-router-dom'
-import { useAppDispatch } from '@/store/hooks'
-import { setModalName } from '@/store/slices/modalSlice'
+//import { useAppDispatch } from '@/store/hooks'
+//import { setModalName } from '@/store/slices/modalSlice'
 import Button from '@/components/UI/Button'
 import OutlinedButton from '@/components/UI/OutlinedButton'
 import SuccessImg from '@/assets/images/successImg.png'
-import { NewInvoiceModalName } from '@/components/UI/Modal/NewInvoiceModal'
+//import { NewInvoiceModalName } from '@/components/UI/Modal/NewInvoiceModal'
 
 export const InvoiceSuccessModalName = `InvoiceSuccessModal`
-
+//TODO:use Action for it and move to it's correct location
 const InvoiceSuccessModal: React.FC = () => {
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
+  //const dispatch = useAppDispatch()
 
   const handleSuccess = () => {
-    navigate('/business/home')
-    dispatch(setModalName(''))
+    navigate('/home')
+    //d//ispatch(setModalName(''))
   }
 
   const handleCreateMore = () => {
-    navigate('/business/home')
-    dispatch(setModalName(NewInvoiceModalName))
+    navigate('/home')
+    //dispatch(setModalName(NewInvoiceModalName))
   }
   return (
     <div className="flex flex-col items-center justify-center p-5 mt-4">

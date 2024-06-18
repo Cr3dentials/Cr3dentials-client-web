@@ -5,11 +5,11 @@ import MenuItem from '@mui/material/MenuItem'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
 const InstallmentSelect: React.FC = () => {
-  const [installment, setInstallment] = useState('weekly')
+  // const [installment, setInstallment] = useState('weekly')
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setInstallment(event.target.value as string)
-  }
+  // const handleChange = (event: SelectChangeEvent) => {
+  //   setInstallment(event.target.value as string)
+  // }
 
   return (
     <div className="mt-4">
@@ -28,8 +28,11 @@ const InstallmentSelect: React.FC = () => {
         fullWidth
         labelId="Installment-Select-Label"
         id="Installment-Select"
-        value={installment}
-        onChange={handleChange}
+        name="Installment-Select"
+        required
+        defaultValue={'weekly'}
+        // value={installment}
+        // onChange={handleChange}
         IconComponent={(props) => <KeyboardArrowDownIcon {...props} />}
         sx={{
           '& .MuiOutlinedInput-notchedOutline': {

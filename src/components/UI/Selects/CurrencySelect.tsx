@@ -8,11 +8,11 @@ import DollarIcon from '@/assets/icons/dollar.svg'
 import KshIcon from '@/assets/icons/ksh.svg'
 
 const CurrencySelect: React.FC = () => {
-  const [currency, setCurrency] = useState('ksh')
+  // const [currency, setCurrency] = useState('ksh')
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setCurrency(event.target.value as string)
-  }
+  // const handleChange = (event: SelectChangeEvent) => {
+  //   setCurrency(event.target.value as string)
+  // }
 
   return (
     <div className="mt-4">
@@ -31,8 +31,11 @@ const CurrencySelect: React.FC = () => {
         fullWidth
         labelId="Currency-Select-Label"
         id="Currency-Select"
-        value={currency}
-        onChange={handleChange}
+        // value={currency}
+        // onChange={handleChange}
+        defaultValue={'KSH'}
+        required
+        name="currency"
         IconComponent={(props) => <KeyboardArrowDownIcon {...props} />}
         sx={{
           '& .MuiOutlinedInput-notchedOutline': {
@@ -45,14 +48,14 @@ const CurrencySelect: React.FC = () => {
           },
         }}
       >
-        <MenuItem value={`ksh`}>
+        <MenuItem value={`KSH`}>
           <img src={KshIcon} alt="kenyan shilling icon" />
           <span className="ml-3">Kenyan Shilling</span>
         </MenuItem>
-        <MenuItem value={`usd`}>
+        {/* <MenuItem value={`USD`}>
           <img src={DollarIcon} alt="dollar usd icon" />
           <span className="ml-3">USD Dollar</span>
-        </MenuItem>
+        </MenuItem> */}
       </Select>
     </div>
   )

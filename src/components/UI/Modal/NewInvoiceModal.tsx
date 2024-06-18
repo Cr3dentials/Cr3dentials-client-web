@@ -3,18 +3,18 @@ import Typography from '@mui/material/Typography'
 import Input from '@/components/UI/Input'
 import Button from '@/components/UI/Button'
 import OutlinedButton from '@/components/UI/OutlinedButton'
-import { useAppDispatch } from '@/store/hooks'
-import { setModalName } from '@/store/slices/modalSlice'
+//import { useAppDispatch } from '@/store/hooks'
+//import { setModalName } from '@/store/slices/modalSlice'
 import { useNavigate } from 'react-router-dom'
 
 export const NewInvoiceModalName = 'NewInvoiceModal'
 
 const NewInvoiceModal: React.FC = () => {
-  const dispatch = useAppDispatch()
+  //const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   const handleNextClick = () => {
-    navigate('/business/create-invoice')
+    navigate('/create-invoice')
   }
 
   return (
@@ -43,7 +43,7 @@ const NewInvoiceModal: React.FC = () => {
       <div className="grid grid-cols-2 gap-3">
         <OutlinedButton
           label="Cancel"
-          onClick={() => dispatch(setModalName(''))}
+          //onClick={() => dispatch(setModalName(''))}
         />
         <Button label="Next" onClick={handleNextClick} />
       </div>
