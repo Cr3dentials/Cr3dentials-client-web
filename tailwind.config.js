@@ -13,13 +13,16 @@ export default withMT({
       gray: {
         25: '#A8AEBF',
         100: '#F5F6FA',
-        200: '',
-        300: '',
+        200: '#F4F5FD',
+        300: '#EBEDF0',
         400: '#C8CCD9',
         800: '#333743',
         1000: '#000000',
       },
       success: '#12B76A',
+      danger: {
+        100: '#F5222D',
+      },
       warn: '#F3A712',
       secondary: '#475467',
     },
