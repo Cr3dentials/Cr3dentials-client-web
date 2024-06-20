@@ -19,7 +19,7 @@ function App() {
           appId="clvwaw3840l0lb1p5bqju84bk"
           config={{
             /* Replace this with your desired login methods */
-            loginMethods: ['sms', 'email', 'wallet', 'google', 'apple'],
+            loginMethods: ['sms', 'email'],
             /* Replace this with your desired appearance configuration */
             appearance: {
               theme: 'light',
