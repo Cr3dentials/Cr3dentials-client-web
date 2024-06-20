@@ -11,7 +11,7 @@ import { useLogin, usePrivy } from '@privy-io/react-auth'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import OutlinedButton from '@/components/UI/OutlinedButton'
 import { Cr3dUser } from '@/features/user/types'
-import { useCreateCr3dUser } from '@/features/user/hooks'
+import { useCr3dUser, useCreateCr3dUser } from '@/features/user/hooks'
 import Loader from '@/components/UI/Loader'
 // import { createCr3dUser } from '@/features/user/api'
 // import { generateRandomString } from '@/features/createInvoice/utils'
@@ -49,7 +49,8 @@ const Onboarding: React.FC = () => {
 
   const { authenticated } = usePrivy()
   const [params, _] = useSearchParams()
-  if (authenticated) {
+  const cr3dUser = useCr3dUser()
+  if (authenticated && cr3dUser) {
     handleRedirect(params)
   }
 
@@ -105,6 +106,8 @@ const Onboarding: React.FC = () => {
       } else {
         //console.log(user.createdAt)
         //get the return url, if any window.location.href=return url
+        //TODO: get user here using useMutation, if error (404) navigate to info(business or customer)
+        //if success call the function below
         handleRedirect(params)
         // const hasReturnUrl = params.has('return_url')
         // if (hasReturnUrl) {
