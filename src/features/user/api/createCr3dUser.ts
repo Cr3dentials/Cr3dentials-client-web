@@ -7,11 +7,10 @@ export type createCr3dUserPayload = {
   phone_number?: string
   role: 'user' | 'vendor'
   created_at?: number
-  vendorTillNumber?: number
+  vendor_till_number?: string
 }
 
 export async function createCr3dUser(payload: createCr3dUserPayload) {
-  // console.log({ payload })
   const parsedPayload = v.parse(
     payload.role === 'vendor'
       ? createCr3dUserVendorSchema

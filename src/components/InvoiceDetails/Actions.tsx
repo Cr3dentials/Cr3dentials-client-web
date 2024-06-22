@@ -183,6 +183,7 @@ const Actions = ({ invoice_id, amount, phone_payer, status }: invoice) => {
   const isVendor = cr3dUser.role === 'vendor'
   const navigate = useNavigate()
   const [actionFlag, setActionFlag] = useState<actions | ''>('')
+  //TODO:you can put the mutations into one single mutations..which the mutation func is a HOF takes a promise factory functions
   const {
     mutate: signInvoiceMutation,
     isPending: isSigningInvoice,

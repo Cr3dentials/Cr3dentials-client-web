@@ -6,5 +6,5 @@ export type Cr3dUser = {
   phone_number?: string
   role: 'user' | 'vendor'
   created_at: string
-  vendor_till_number?: number
+  vendor_till_number?: string
 }

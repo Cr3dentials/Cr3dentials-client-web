@@ -43,14 +43,14 @@ const index = () => {
     }, {}) as {
       //phone_vendor: string
       //till_vendor: string
-      vendorTillNumber: string
+      vendor_till_number: string
       name_vendor: string
     }
     createCr3dUserMutation.mutate(
       {
         role: 'vendor',
         created_at: Math.floor(user!.createdAt.getTime() / 1000),
-        vendorTillNumber: parseInt(payload.vendorTillNumber),
+        vendor_till_number: payload.vendor_till_number,
         //phone_vendor: payload.phone_vendor,
         //name_vendor: payload.name_vendor,
       },
@@ -101,7 +101,7 @@ const index = () => {
             required
             type="number"
             placeholder="Enter Business Till Number"
-            name="vendorTillNumber"
+            name="vendor_till_number"
           />
         </div>
         {/* <div className="mt-4">

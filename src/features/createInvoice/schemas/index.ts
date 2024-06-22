@@ -14,5 +14,8 @@ export const createInvoiceSchema = v.object({
   ]),
   phonePayer: v.string([v.minLength(1)]),
   namePayer: v.string([v.minLength(1)]),
-  vendorTillNumber: v.number([v.minValue(1000, 'Invalid Till Number')]),
+  vendor_till_number: v.string([
+    v.minLength(4, 'Invalid Till Number'),
+    v.maxLength(5, 'Invalid Till Number'),
+  ]),
 })

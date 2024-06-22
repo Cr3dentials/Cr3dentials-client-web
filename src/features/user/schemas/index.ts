@@ -12,6 +12,9 @@ const sharedSchema = v.object({
   ]),
   role: v.enum_(ROLES),
   created_at: v.number([v.minValue(1, 'Due date required')]),
+  phone_number: v.optional(
+    v.string([v.minLength(1, 'Phone number is required')]),
+  ),
 })
 
 export const createCr3dUserSchema = v.merge([
@@ -23,6 +26,9 @@ export const createCr3dUserSchema = v.merge([
 export const createCr3dUserVendorSchema = v.merge([
   sharedSchema,
   v.object({
-    vendorTillNumber: v.number([v.minValue(1000, 'Invalid Till Number')]),
+    vendor_till_number: v.string([
+      v.minLength(4, 'Invalid Till Number'),
+      v.maxLength(5, 'Invalid Till Number'),
+    ]),
   }),
 ])

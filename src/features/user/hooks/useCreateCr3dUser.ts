@@ -55,7 +55,10 @@ export function useCreateCr3dUser() {
         //created_at: Math.floor(new Date().getTime() / 1000),
         email: user?.email?.address,
         username: user?.wallet?.address!,
-        phone_number: phone_number || user?.phone?.number,
+        phone_number: (phone_number || user?.phone?.number || '').replace(
+          /[+\s]/g,
+          '',
+        ),
         role,
         ...restOfPayload,
       })
