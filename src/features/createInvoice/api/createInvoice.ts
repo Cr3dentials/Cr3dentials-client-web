@@ -20,7 +20,7 @@ export type createInvoicePayload = {
   vendorId: walletAddress
   phonePayer: string
   namePayer: string
-  vendor_till_number: string
+  vendorTillNumber: string
 }
 
 export default async function createInvoice(payload: createInvoicePayload) {

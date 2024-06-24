@@ -106,7 +106,7 @@ const CreateInvoice: React.FC = () => {
       payer: user?.wallet?.address!,
       vendorId: user?.wallet?.address!,
       invoiceId: generateRandomNumber(),
-      vendor_till_number: cr3dUser.vendor_till_number!,
+      vendorTillNumber: cr3dUser.vendor_till_number!,
     })
     // createInvoiceMutation.mutate({
     //   invoice_id: generateRandomString(),
