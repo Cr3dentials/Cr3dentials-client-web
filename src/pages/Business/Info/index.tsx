@@ -5,12 +5,12 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import MenuItem from '@mui/material/MenuItem'
 import Button from '@/components/UI/Button'
 import { useCreateCr3dUser } from '@/features/user/hooks'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import React from 'react'
 import { usePrivy } from '@privy-io/react-auth'
 import { handleRedirect } from '@/pages/Onboarding'
 const index = () => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const { authenticated, user } = usePrivy()
   const [params, _] = useSearchParams()
   //co

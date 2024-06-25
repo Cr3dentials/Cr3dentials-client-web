@@ -1,14 +1,14 @@
 import SuccessImg from '@/assets/images/successImg.png'
 import Action from '@/components/UI/Action'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
-import { useMutationState } from '@tanstack/react-query'
-import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+// import { useMutationState } from '@tanstack/react-query'
+import { Link, useSearchParams } from 'react-router-dom'
 const PaymentAwait = () => {
   //const navigate = useNavigate()
   const [queryparams, _] = useSearchParams()
-  const mutationState = useMutationState({
-    filters: { mutationKey: ['payInvoice'] },
-  })
+  // const mutationState = useMutationState({
+  //   filters: { mutationKey: ['payInvoice'] },
+  // })
   //console.log(mutationState)
   return (
     <div className="p-5 pb-16 min-h-screen">

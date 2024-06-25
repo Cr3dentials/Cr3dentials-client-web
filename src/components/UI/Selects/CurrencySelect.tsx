@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Typography from '@mui/material/Typography'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
+import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
-import DollarIcon from '@/assets/icons/dollar.svg'
+// import DollarIcon from '@/assets/icons/dollar.svg'
 import KshIcon from '@/assets/icons/ksh.svg'
 
 const CurrencySelect: React.FC = () => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import Typography from '@mui/material/Typography'
 import Status, { status } from '../UI/Status'
-import Trend from '../Icons/Trend'
+// import Trend from '../Icons/Trend'
 import { Link } from 'react-router-dom'
 
 export type InvoiceItemProps = {

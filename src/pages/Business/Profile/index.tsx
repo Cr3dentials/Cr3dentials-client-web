@@ -7,7 +7,7 @@ import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import SettingPanel from '@/components/Business/Profile/SettingPanel'
 
-import AvatarImg from '@/assets/images/Avatar.png'
+// ß
 import AboutPanel from '@/components/Business/Profile/AboutPanel'
 import { useLogout, usePrivy } from '@privy-io/react-auth'
 import { useCr3dUser } from '@/features/user/hooks'
