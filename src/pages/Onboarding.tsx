@@ -23,8 +23,8 @@ export type SlideType = {
   subtitle: string
 }
 
-const customer_label_text = 'Login as a Customer'
-const vendor_label_text = 'Login as a Vendor'
+const customer_label_text = 'Login/Signup as a Customer'
+const vendor_label_text = 'Login/Signup as a Business'
 
 //TODO: change name
 export function handleRedirect(params: URLSearchParams) {
