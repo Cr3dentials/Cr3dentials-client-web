@@ -13,6 +13,7 @@ import OutlinedButton from '@/components/UI/OutlinedButton'
 import { Cr3dUser } from '@/features/user/types'
 import { useCr3dUser, useCreateCr3dUser } from '@/features/user/hooks'
 import Loader from '@/components/UI/Loader'
+import cr3dLogo from '@/assets/icons/credentials.svg'
 // import { createCr3dUser } from '@/features/user/api'
 // import { generateRandomString } from '@/features/createInvoice/utils'
 
@@ -23,8 +24,8 @@ export type SlideType = {
   subtitle: string
 }
 
-const customer_label_text = 'Login/Signup as a Customer'
-const vendor_label_text = 'Login/Signup as a Business'
+const customer_label_text = 'Customer Account'
+const vendor_label_text = 'Business Account'
 
 //TODO: change name
 export function handleRedirect(params: URLSearchParams) {
@@ -170,6 +171,9 @@ const Onboarding: React.FC = () => {
 
   return (
     <div className="p-5 pb-16 min-h-screen mt-auto mb-auto flex items-center flex-col justify-center gap-2">
+      <div className="-mt-10 w-[120px] h-[120px]">
+        <img src={cr3dLogo} alt="logo" />
+      </div>
       <Button
         disabled={isError || isPending}
         className="user"
