@@ -83,7 +83,7 @@ const index = () => {
           marginTop: '4px',
         }}
       >
-        Help us to know you
+       Let's Build Your Business Profile
       </Typography>
       <form onSubmit={createcr3dVendorAccountOnSubmit}>
         <div className="mt-4">
@@ -149,7 +149,7 @@ const index = () => {
               <span className="ml-3">Ghana</span>
             </MenuItem>
             <MenuItem value={`NIG`}>
-              <span className="ml-3">Nigeria</span>
+              <span className="ml-3">Kenya</span>
             </MenuItem>
           </Select>
         </div>

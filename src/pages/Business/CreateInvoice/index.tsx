@@ -219,6 +219,16 @@ const CreateInvoice: React.FC = () => {
         />
         {installmentCheckedFlag && <InstallmentSelect />} */}
         <div className="mt-4">
+          <Input
+            required
+            name="description"
+            label="Description"
+            placeholder="Goods or Services"
+            type="text"
+          />
+        </div>
+
+        <div className="mt-4">
           <CurrencySelect />
         </div>
         <div className="mt-4">

@@ -57,7 +57,7 @@ const index = () => {
           marginTop: '4px',
         }}
       >
-        Just a lil more
+        Just a little more...
       </Typography>
       <form onSubmit={createCr3dUserAccountOnSubmit}>
         <div className="mt-4">
