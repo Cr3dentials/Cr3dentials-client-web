@@ -11,7 +11,7 @@ type walletAddress = string
 
 export type createInvoicePayload = {
   invoiceId: number
-  dueDate: number
+  dueDate?: number | null
   amount: number
   //it's now the wallet address of the business temporarily
   payer: walletAddress
@@ -21,6 +21,8 @@ export type createInvoicePayload = {
   phonePayer: string
   namePayer: string
   vendorTillNumber: string
+  description: string
+  type: 'one-time' | 'installments'
 }
 
 export default async function createInvoice(payload: createInvoicePayload) {

@@ -24,7 +24,7 @@ const InvoiceDetail = ({ title, children, detail }: InvoiceDetailProps) => {
       ) : (
         <Typography
           variant="body2"
-          className="mt-2"
+          className="mt-2 capitalize"
           sx={{
             fontWeight: 400,
             fontSize: '14px',

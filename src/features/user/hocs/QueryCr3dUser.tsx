@@ -8,7 +8,7 @@ import LazyLoad from '@/components/UI/LazyLoad'
 //should be under the router and notified when route changes
 /**A hoc to query a cr3d user,making it globally available to the app*/
 const QueryCr3dUser = ({ children }: { children: React.ReactNode }) => {
-  const publicPaths = ['', '/', '/business-info', '/customer-info']
+  const publicPaths = ['', '/business-info', '/customer-info']
   const pathname = window.location.pathname
   const { authenticated, user } = usePrivy()
   const cr3dUserQuery = useQuery({
@@ -23,6 +23,7 @@ const QueryCr3dUser = ({ children }: { children: React.ReactNode }) => {
 
   if (authenticated && cr3dUserQuery.error?.message === '404') {
     //redirect to either info / customer info
+    //console.log('here')
   }
 
   if (authenticated) {

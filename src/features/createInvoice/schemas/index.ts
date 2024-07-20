@@ -2,7 +2,7 @@ import * as v from 'valibot'
 import * as ethers from 'ethers'
 export const createInvoiceSchema = v.object({
   invoiceId: v.number([v.minValue(10000)]),
-  dueDate: v.number(),
+  dueDate: v.nullish(v.number()),
   amount: v.number(),
   payer: v.string([
     v.custom<string>(ethers.isAddress, 'Invalid Wallet Address'),
@@ -18,4 +18,6 @@ export const createInvoiceSchema = v.object({
     v.minLength(4, 'Invalid Till Number'),
     v.maxLength(5, 'Invalid Till Number'),
   ]),
+  description: v.string([v.minLength(4, 'Description Too Short')]),
+  type: v.picklist(['one-time', 'installments']),
 })
