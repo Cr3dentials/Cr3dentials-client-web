@@ -51,6 +51,7 @@ const Onboarding: React.FC = () => {
   const { authenticated } = usePrivy()
   const [params, _] = useSearchParams()
   const cr3dUser = useCr3dUser()
+
   if (authenticated && cr3dUser) {
     handleRedirect(params)
   }

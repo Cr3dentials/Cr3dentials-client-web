@@ -28,9 +28,10 @@ const InstallmentSelect: React.FC = () => {
         fullWidth
         labelId="Installment-Select-Label"
         id="Installment-Select"
-        name="Installment-Select"
+        name="frequency"
         required
-        defaultValue={'weekly'}
+        defaultValue={'0'}
+        placeholder="Select a Payment Plan"
         // value={installment}
         // onChange={handleChange}
         IconComponent={(props) => <KeyboardArrowDownIcon {...props} />}
@@ -40,8 +41,9 @@ const InstallmentSelect: React.FC = () => {
           },
         }}
       >
-        <MenuItem value={`weekly`}>Weekly</MenuItem>
-        <MenuItem value={`monthly`}>Monthly</MenuItem>
+        <MenuItem value={'0'}>Weekly</MenuItem>
+        <MenuItem value={'1'}>Bi-Weekly</MenuItem>
+        <MenuItem value={'2'}>Monthly</MenuItem>
       </Select>
     </div>
   )

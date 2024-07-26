@@ -15,60 +15,64 @@ import { usePrivy } from '@privy-io/react-auth'
 import Input from '@/components/UI/Input'
 import { generateRandomNumber } from '@/features/createInvoice/utils'
 import { useCr3dUser } from '@/features/user/hooks'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import InstallmentSelect from '@/components/UI/Selects/InstallmentSelect'
+import { styled, SwitchProps, Switch } from '@mui/material'
 
-// const InstallmentSwitch = styled((props: SwitchProps) => (
-//   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
-// ))(({ theme }) => ({
-//   width: 51,
-//   height: 31,
-//   padding: 0,
-//   '& .MuiSwitch-switchBase': {
-//     padding: 0,
-//     margin: 2,
-//     transitionDuration: '300ms',
-//     '&.Mui-checked': {
-//       transform: 'translateX(20px)',
-//       color: '#fff',
-//       '& + .MuiSwitch-track': {
-//         backgroundColor: '#4B56E3',
-//         opacity: 1,
-//         border: 0,
-//       },
-//       '&.Mui-disabled + .MuiSwitch-track': {
-//         opacity: 0.5,
-//       },
-//     },
-//     '&.Mui-focusVisible .MuiSwitch-thumb': {
-//       color: '#33cf4d',
-//       border: '6px solid #fff',
-//     },
-//     '&.Mui-disabled .MuiSwitch-thumb': {
-//       color:
-//         theme.palette.mode === 'light'
-//           ? theme.palette.grey[100]
-//           : theme.palette.grey[600],
-//     },
-//     '&.Mui-disabled + .MuiSwitch-track': {
-//       opacity: theme.palette.mode === 'light' ? 0.7 : 0.3,
-//     },
-//   },
-//   '& .MuiSwitch-thumb': {
-//     boxSizing: 'border-box',
-//     width: 27,
-//     height: 27,
-//   },
-//   '& .MuiSwitch-track': {
-//     borderRadius: 31 / 2,
-//     backgroundColor: '#333743',
-//     opacity: 1,
-//     transition: theme.transitions.create(['background-color'], {
-//       duration: 500,
-//     }),
-//   },
-// }))
+const InstallmentSwitch = styled((props: SwitchProps) => (
+  <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
+))(({ theme }) => ({
+  width: 51,
+  height: 31,
+  padding: 0,
+  '& .MuiSwitch-switchBase': {
+    padding: 0,
+    margin: 2,
+    transitionDuration: '300ms',
+    '&.Mui-checked': {
+      transform: 'translateX(20px)',
+      color: '#fff',
+      '& + .MuiSwitch-track': {
+        backgroundColor: '#4B56E3',
+        opacity: 1,
+        border: 0,
+      },
+      '&.Mui-disabled + .MuiSwitch-track': {
+        opacity: 0.5,
+      },
+    },
+    '&.Mui-focusVisible .MuiSwitch-thumb': {
+      color: '#33cf4d',
+      border: '6px solid #fff',
+    },
+    '&.Mui-disabled .MuiSwitch-thumb': {
+      color:
+        theme.palette.mode === 'light'
+          ? theme.palette.grey[100]
+          : theme.palette.grey[600],
+    },
+    '&.Mui-disabled + .MuiSwitch-track': {
+      opacity: theme.palette.mode === 'light' ? 0.7 : 0.3,
+    },
+  },
+  '& .MuiSwitch-thumb': {
+    boxSizing: 'border-box',
+    width: 27,
+    height: 27,
+  },
+  '& .MuiSwitch-track': {
+    borderRadius: 31 / 2,
+    backgroundColor: '#333743',
+    opacity: 1,
+    transition: theme.transitions.create(['background-color'], {
+      duration: 500,
+    }),
+  },
+}))
 
 const CreateInvoice: React.FC = () => {
-  // const [installmentCheckedFlag, setInstallmentCheckedFlag] = useState(false)
+  const [installmentCheckedFlag, setInstallmentCheckedFlag] =
+    React.useState(false)
   // const [createInvoiceSuccess, setCreateInvoiceSuccess] = useState(false)
   const createInvoiceMutation = useCreateInvoice()
   const navigate = useNavigate()
@@ -84,29 +88,37 @@ const CreateInvoice: React.FC = () => {
   ) => {
     e.preventDefault()
     const formEl = e.target as HTMLFormElement
-    const payload = [...new FormData(formEl).entries()].reduce((a, b) => {
-      return {
-        [b[0]]: b[1],
-        ...a,
-      }
-    }, {}) as {
-      dueDate: string
+    const payload = [...new FormData(formEl).entries()].reduce(
+      (formValuesMap, entry) => {
+        return {
+          [entry[0]]: entry[1],
+          ...formValuesMap,
+        }
+      },
+      {},
+    ) as {
+      dueDate?: string
       processor: string
       currency: string
       phonePayer: string
       namePayer: string
       amount: string
+      description: string
+      frequency?: '0' | '1' | '2'
     }
 
     // console.log(payload)
     createInvoiceMutation.mutate({
       ...payload,
       amount: parseFloat(payload.amount),
-      dueDate: Math.floor(new Date(payload.dueDate).getTime() / 1000),
+      dueDate: payload.dueDate
+        ? Math.floor(new Date(payload.dueDate).getTime() / 1000)
+        : null,
       payer: user?.wallet?.address!,
       vendorId: user?.wallet?.address!,
       invoiceId: generateRandomNumber(),
       vendorTillNumber: cr3dUser.vendor_till_number!,
+      type: installmentCheckedFlag ? 'installments' : 'one-time',
     })
     // createInvoiceMutation.mutate({
     //   invoice_id: generateRandomString(),
@@ -186,7 +198,7 @@ const CreateInvoice: React.FC = () => {
             type="text"
           />
         </div>
-        {/* <FormControlLabel
+        <FormControlLabel
           control={
             <InstallmentSwitch
               sx={{ m: 1 }}
@@ -217,7 +229,7 @@ const CreateInvoice: React.FC = () => {
             width: '100%',
           }}
         />
-        {installmentCheckedFlag && <InstallmentSelect />} */}
+        {installmentCheckedFlag && <InstallmentSelect />}
         <div className="mt-4">
           <Input
             required
@@ -237,6 +249,10 @@ const CreateInvoice: React.FC = () => {
         <div className="mt-4">
           <DueDate />
         </div>
+        {/* {installmentCheckedFlag ? null : (
+        
+        )} */}
+
         {/* <div className="mt-4 max-h-96 overflow-auto">
           {invoices.map((invoice: InvoiceItemType) => (
             <InvoiceItem

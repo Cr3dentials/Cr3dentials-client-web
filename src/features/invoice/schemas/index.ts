@@ -11,3 +11,10 @@ export const payInvoiceSchema = v.object({
   amount: v.number(),
   phone_payer: v.string([v.minLength(1)]),
 })
+
+export const payInvoiceInstallmentSchema = v.object({
+  invoice_id: v.number([v.minValue(10000)]),
+  amount: v.number(),
+  phone_payer: v.string([v.minLength(1)]),
+  installment_id: v.number([v.minValue(10000)]),
+})
