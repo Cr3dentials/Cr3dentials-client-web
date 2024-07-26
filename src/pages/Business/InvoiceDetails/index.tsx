@@ -74,7 +74,7 @@ const index = () => {
     data.installmentPlans.length
   ) {
     receivedInstallments = data.installmentPlans.filter((ins) =>
-      ['paid'].includes(ins.status),
+      ins.status.startsWith('paid'),
     )
 
     installmentsNode = (

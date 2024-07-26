@@ -20,4 +20,11 @@ export const createInvoiceSchema = v.object({
   ]),
   description: v.string([v.minLength(4, 'Description Too Short')]),
   type: v.picklist(['one-time', 'installments']),
+  frequency: v.optional(v.picklist(['0', '1', '2'])),
+})
+
+export const createInstallmentPlanSchema = v.object({
+  invoice_id: v.number([v.minValue(10000)]),
+  frequency: v.picklist([0, 1, 2]),
+  amount: v.number(),
 })

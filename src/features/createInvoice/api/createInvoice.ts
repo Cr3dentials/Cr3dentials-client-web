@@ -23,6 +23,7 @@ export type createInvoicePayload = {
   vendorTillNumber: string
   description: string
   type: 'one-time' | 'installments'
+  frequency?: '0' | '1' | '2'
 }
 
 export default async function createInvoice(payload: createInvoicePayload) {

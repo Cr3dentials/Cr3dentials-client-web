@@ -3,6 +3,7 @@ type invoiceInstallment = {
   amount: string | number
   status: status
   due_date: number
+  installment_id: number
 }
 export type invoice = {
   invoice_id: number

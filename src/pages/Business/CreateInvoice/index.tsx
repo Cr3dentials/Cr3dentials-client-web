@@ -104,7 +104,7 @@ const CreateInvoice: React.FC = () => {
       namePayer: string
       amount: string
       description: string
-      frequency: string
+      frequency?: '0' | '1' | '2'
     }
 
     // console.log(payload)
@@ -246,11 +246,12 @@ const CreateInvoice: React.FC = () => {
         <div className="mt-4">
           <PaymentSelect />
         </div>
-        {installmentCheckedFlag ? null : (
-          <div className="mt-4">
-            <DueDate />
-          </div>
-        )}
+        <div className="mt-4">
+          <DueDate />
+        </div>
+        {/* {installmentCheckedFlag ? null : (
+        
+        )} */}
 
         {/* <div className="mt-4 max-h-96 overflow-auto">
           {invoices.map((invoice: InvoiceItemType) => (

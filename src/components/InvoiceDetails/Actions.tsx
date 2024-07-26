@@ -12,7 +12,9 @@ import { invoice } from '@/features/invoice/types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   declineInvoice,
+  payInstallment,
   payInvoice,
+  payInvoiceInstallmentPayload,
   payInvoicePayload,
   signInvoice,
 } from '@/features/invoice/features/api'
@@ -61,14 +63,38 @@ const PayInvoice = ({
   phone_payer: string
   invoice_id: number
 }) => {
-  const payInvoiceMutation = useMutation({
-    mutationKey: ['payInvoice'],
-    mutationFn: function (payload: payInvoicePayload) {
-      return payInvoice(payload)
-    },
-  })
   const isInvoicePaid = status.startsWith('paid')
   const client = useQueryClient()
+  const invoice = client.getQueryData<invoice>([
+    'invoices',
+    payload.invoice_id + '',
+  ])!
+
+  const installmentsMap = {
+    'one-time': {
+      actionText: 'Pay Invoice',
+      mutationFn: function (payload: payInvoicePayload) {
+        return payInvoice(payload)
+      },
+      buttonLabelSuccess: 'Invoice Paid',
+    },
+    installments: {
+      actionText: `Pay Installment ${
+        (invoice.installmentPlans?.filter((ins) =>
+          ins.status.startsWith('paid'),
+        ).length || 0) + 1
+      }`,
+      buttonLabelSuccess: 'Installment Paid',
+      mutationFn: function (payload: payInvoiceInstallmentPayload) {
+        return payInstallment(payload)
+      },
+    },
+  }
+
+  const payInvoiceMutation = useMutation({
+    mutationKey: ['payInvoice'],
+    mutationFn: installmentsMap[invoice.type].mutationFn,
+  })
   //console.log(status)
   //const mutationS
   //const navigate = useNavigate()
@@ -97,23 +123,34 @@ const PayInvoice = ({
           onClick={() => {
             //onAction('active')
             //places the pay invoice mutation in flight
-            payInvoiceMutation.mutate(
-              {
-                amount: parseFloat(amount),
-                ...payload,
+            //@ts-expect-error
+            let payInvoicePayloadObj: payInvoicePayload & {
+              installment_id: number
+            } = {
+              amount: parseFloat(amount),
+              ...payload,
+            }
+            if (invoice.type === 'installments' && invoice.installmentPlans) {
+              const nextInstallmentToPay = invoice.installmentPlans.find(
+                (ins) => ['pending', 'overdue'].includes(ins.status),
+              )!
+              payInvoicePayloadObj = {
+                ...payInvoicePayloadObj,
+                amount: parseFloat(nextInstallmentToPay.amount),
+                installment_id: nextInstallmentToPay?.installment_id!,
+              }
+            }
+            payInvoiceMutation.mutate(payInvoicePayloadObj, {
+              onSuccess() {
+                closeModal?.()
+                client.invalidateQueries({
+                  queryKey: ['invoices', payload.invoice_id + ''],
+                })
               },
-              {
-                onSuccess() {
-                  closeModal?.()
-                  client.invalidateQueries({
-                    queryKey: ['invoices', payload.invoice_id + ''],
-                  })
-                },
-                onError() {
-                  console.log()
-                },
+              onError() {
+                console.log()
               },
-            )
+            })
             // payInvoiceMutation.mutate({
             //   amount: parseFloat(amount),
             //   ...payload,

@@ -10,7 +10,7 @@ import LazyLoad from '@/components/UI/LazyLoad'
 const QueryCr3dUser = ({ children }: { children: React.ReactNode }) => {
   const publicPaths = ['', '/business-info', '/customer-info']
   const pathname = window.location.pathname
-  const { authenticated, user } = usePrivy()
+  const { authenticated, user, logout } = usePrivy()
   const cr3dUserQuery = useQuery({
     queryKey: ['cr3dUser'],
     queryFn: () =>
@@ -21,10 +21,10 @@ const QueryCr3dUser = ({ children }: { children: React.ReactNode }) => {
     retry: false,
   })
 
-  if (authenticated && cr3dUserQuery.error?.message === '404') {
-    //redirect to either info / customer info
-    //console.log('here')
-  }
+  // if (authenticated && cr3dUserQuery.error?.message.includes('404')) {
+  //   //redirect to either info / customer info
+  //   console.log('here')
+  // }
 
   if (authenticated) {
     if (cr3dUserQuery.isLoading) {
