@@ -39,7 +39,7 @@ const Approve = ({ onAction }: { onAction: (action: actions) => void }) => (
       onClick={() => {
         onAction('active')
       }}
-      className="mt-6 w-full"
+      className="mt-6 w-[50%]"
     />
     <OutlinedButton
       onClick={() => {
@@ -157,7 +157,7 @@ const PayInvoice = ({
             // })
             // navigate('/payments-await/?invoice_id=' + payload.invoice_id)
           }}
-          className="mt-6 w-full"
+          className="mt-6 w-[50%]"
         />
         <OutlinedButton
           disabled={payInvoiceMutation.isPending}
@@ -274,7 +274,7 @@ const Actions = ({ invoice_id, amount, phone_payer, status }: invoice) => {
               },
             )
           }}
-          className="mt-6 w-full"
+          className="mt-6 w-[50%]"
         />
       </ActionConfirmation>
     ),
@@ -324,7 +324,7 @@ const Actions = ({ invoice_id, amount, phone_payer, status }: invoice) => {
       <div className="absolute bottom-0 flex flex-col items-center justify-center -ml-5 mb-1 border-t mt-4 border-gray-300 max-w-screen-sm w-full">
         {!isInvoicePaid && (
           <Button
-            className="mt-4 bg-danger-100 hover:bg-danger-100 w-full"
+            className="mt-4 bg-danger-100 hover:bg-danger-100 w-[50%]"
             label="Cancel Invoice"
             onClick={() => {
               setActionFlag('cancel')
@@ -352,10 +352,10 @@ const Actions = ({ invoice_id, amount, phone_payer, status }: invoice) => {
           }}
           disabled={isSigningInvoice || declineInvoiceMutation.isPending}
           label={isSigningInvoice ? 'Please wait...' : 'Sign invoice'}
-          className="w-full mt-4"
+          className="w-[50%] mt-4"
         />
         <Button
-          className="mt-4 hover:bg-danger-100 bg-danger-100 w-full"
+          className="mt-4 hover:bg-danger-100 bg-danger-100 w-[50%]"
           disabled={declineInvoiceMutation.isPending || isSigningInvoice}
           label={
             declineInvoiceMutation.isPending ? 'Please wait' : 'Decline Invoice'
@@ -378,7 +378,7 @@ const Actions = ({ invoice_id, amount, phone_payer, status }: invoice) => {
     active: (
       <Button
         disabled={isInvoicePaid}
-        className="hover:bg-success bg-success w-full mt-4"
+        className="hover:bg-success bg-success w-[50%] mt-4"
         onClick={() => {
           setActionFlag('pay')
         }}

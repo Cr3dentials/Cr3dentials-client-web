@@ -22,7 +22,7 @@ const Empty = ({ role }: { role: Cr3dUser['role'] }) => {
         text="No Invoices Found"
       >
         {role === 'vendor' ? (
-          <Button className="mt-8" label="Create Your First Invoice" />
+          <Button className="mt-8 w-[50%]" label="Create Your First Invoice" />
         ) : null}
       </Action>
     </div>

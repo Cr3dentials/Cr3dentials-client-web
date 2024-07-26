@@ -263,7 +263,7 @@ const CreateInvoice: React.FC = () => {
             />
           ))}
         </div> */}
-        <div className="mt-4">
+        <div className="mt-4 text-center">
           {/* <OutlinedButton type="button" label="+ Add item or service" /> */}
           <Button
             type="submit"
@@ -271,7 +271,7 @@ const CreateInvoice: React.FC = () => {
               createInvoiceMutation.isPending ? 'Creating...' : 'Create Invoice'
             }
             disabled={createInvoiceMutation.isPending}
-            className="mt-8"
+            className="mt-8 w-[50%]"
             // onClick={() => {
             //   setCreateInvoiceSuccess(true)
             // }}
