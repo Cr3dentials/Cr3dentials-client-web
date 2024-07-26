@@ -71,6 +71,7 @@ const index = () => {
         </div>
         <div className="mt-4">
           <Button
+            className="w-[50%]"
             disabled={createCr3dUserMutation.isPending}
             type="submit"
             label={
