@@ -39,7 +39,7 @@ export function handleRedirect(params: URLSearchParams) {
 const Onboarding: React.FC = () => {
   const navigate = useNavigate()
   //const qc = useQueryClient()
-  const userType = useRef<Cr3dUser['role']>('user')
+  const userType = useRef<Cr3dUser['role'] | null>(null)
   const {
     isPending,
     isError,
@@ -48,11 +48,11 @@ const Onboarding: React.FC = () => {
     mutate: createCr3dUserUponUserLogin,
   } = useCreateCr3dUser()
 
-  const { authenticated } = usePrivy()
+  const { authenticated, logout } = usePrivy()
   const [params, _] = useSearchParams()
-  const cr3dUser = useCr3dUser()
-
-  if (authenticated && cr3dUser) {
+  // const cr3dUser = useCr3dUser()
+  const noCr3dUser = params.has('authNotFound')
+  if (authenticated && userType.current === null && !noCr3dUser) {
     handleRedirect(params)
   }
 
@@ -96,6 +96,7 @@ const Onboarding: React.FC = () => {
               //take path from existing url
               //window.location.pathname = '/home'
             },
+            onError: logout,
             // onError(e) {
             //   console.log({ e })
             // },
@@ -144,8 +145,19 @@ const Onboarding: React.FC = () => {
   const loginWithUserRole: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     //it should be name , i know
     const el = e.target as HTMLButtonElement
+
+    userType.current = 'user'
+
     if (el.textContent === vendor_label_text) {
       userType.current = 'vendor'
+    }
+
+    if (authenticated && noCr3dUser) {
+      userType.current === 'vendor'
+        ? navigate('/business-info')
+        : navigate('/customer-info')
+
+      return
     }
     // console.log(el)
     // createCr3dUserUponUserLogin(userType.current, {
