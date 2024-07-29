@@ -83,7 +83,7 @@ const index = () => {
           marginTop: '4px',
         }}
       >
-       Let's Build Your Business Profile
+        Let's Build Your Business Profile
       </Typography>
       <form onSubmit={createcr3dVendorAccountOnSubmit}>
         <div className="mt-4">
@@ -192,9 +192,10 @@ const index = () => {
             ))}
           </Select>
         </div>
-        <div className="mt-4">
+        <div className="mt-4 text-center">
           <Button
             disabled={createCr3dUserMutation.isPending}
+            className="w-[50%]"
             type="submit"
             label={
               createCr3dUserMutation.isPending ? 'Please wait...' : 'Proceed'
